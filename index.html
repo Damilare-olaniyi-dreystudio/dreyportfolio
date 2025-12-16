@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+  <title>TheDreyStudio - Frontend Dev & UI/UX</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css">
+  <script src="Bootstrap/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="Damilare Social profile.jpg" class="favicon" type="image/x-icon"
+    style="border-radius: 100px;">
+</head>
+
+<body  id="body" style="overflow-x: hidden; position: relative;">
+
+  <nav class="navbar navbar-expand-lg  glass-nav mx-auto mt-4 fixed-top" id="navbar">
+    <div class="container">
+      <a href="#" class="navbar-brand text-white fw-bold">TheDreyStudio</a>
+
+      <button class="navbar-toggler bg-dark border-1 border-white" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link text-white" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#service">Service</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#portfolio">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#faq">FAQ</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#contact">Contact</a></li>
+
+        </ul>
+        <button class="btn btn-sm  ms-4 " type="button" class="btn btn-lg" data-bs-toggle="modal"
+            data-bs-target="#modalId" id="hire" style="background-color: #6c63ff;"> Hire Me </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Modal Body -->
+  <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+  <div class="modal fade mt-5" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" style=" width: 100%;" role="dialog"
+    aria-labelledby="modalTitleId" >
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md
+    
+    " role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitleId">
+            Kindly Input Your Hiring Details
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form id="hire-form">
+
+            <label for="inputName" class=" col-form-label">
+              Full Name
+            </label>
+            <div class="mb-3">
+              <input type="text" name="inputName" id="inputName" class="form-control" placeholder="your full name"
+                aria-describedby="helpId" required />
+            </div>
+
+            <label for="brandName" class=" col-form-label">
+              Email Address
+            </label>
+            <div class="mb-3">
+              <input type="email" name="brandEmail" id="brandName" class="form-control" placeholder="example@mail.com"
+                aria-describedby="helpId" required />
+            </div>
+
+
+            <div class="mb-3">
+              <label for="
+          category
+          " class="form-label">
+                Category
+              </label>
+              <select class="form-select form-select-lg" name="category" id="category" required>
+                <option selected value="Website Development">
+                  Website Development
+                </option>
+                <option value="Graphic Design">
+                  Graphic Design
+                </option>
+                <option value="UI/UX Design">
+                  UI/UX Design
+                </option>
+                <option value="Online Store">
+                  Online Store
+
+                </option>
+
+                <option value="No Code Website">
+                  No code Website
+                </option>
+                <option value="Other" id="otherCategory">
+                  Other
+                </option>
+
+
+               
+
+
+              </select>
+               <input type="text" style="display: none;" placeholder="let us know your other project here"
+                  class="form-control mt-3 mb-3" id="showOther">
+            </div>
+
+            <div class="mb-3">
+              <label for="
+          textarea
+          " class="form-label">
+                Explain Your Project in Detail
+              </label>
+              <textarea class="form-control"  id="textarea" rows="3" name="message" required></textarea>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn " style="background-color: #6c63ff;" >
+            Submit
+          </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+  // Initialize EmailJS with your public key
+  emailjs.init("4dRKpi8x_rvkxMkZ4"); 
+
+  const hireForm = document.getElementById('hire-form'); 
+  const hireCategorySelect = document.getElementById('category');
+  const hireOtherInput = document.getElementById('showOther');
+
+  // Show/hide input if "Other" is selected
+  hireCategorySelect.addEventListener('change', function() {
+    if (this.value === 'Other') {
+      hireOtherInput.style.display = 'block';
+      hireOtherInput.setAttribute('name', 'category'); 
+      this.removeAttribute('name');
+    } else {
+      otherInput.style.display = 'none';
+      otherInput.removeAttribute('name');
+      this.setAttribute('name', 'category'); 
+    }
+  });
+
+  // Handle form submit
+  hireForm.addEventListener('submit', function(e) {
+    e.preventDefault(); 
+
+    emailjs.sendForm('service_652i0e8', 'template_5zkvyuk', this)
+      .then(function() {
+        alert('Hire request sent successfully! ✅');
+        hireForm.reset();
+      }, function(error) {
+        alert('Failed to send hire request. ❌ Please try again.');
+      });
+  });
+</script>
+
+
+
+
+  <!-- Optional: Place to the bottom of scripts -->
+  <script>
+    const myModal = new bootstrap.Modal(
+      document.getElementById("modalId"),
+      {},
+    );
+
+    const otherInput = document.getElementById('showOther');
+    const categorySelect = document.getElementById('category');
+
+    categorySelect.addEventListener('change', function () {
+      if (this.value === 'Other') {
+        otherInput.style.display = 'block';
+      } else {
+        otherInput.style.display = 'none';
+      }
+    });
+  </script>
+
+
+
+
+
+  <!--Hero section-->
+  <section class="hero-section d-flex align-items-center p-5">
+    <div class="container " style="position: relative; top: 40px;">
+      <div class="row align-items-center position-relative" style="z-index: 200;">
+        <div class="col-md-6  text-white heading ">
+          <h2 class="h5 text-white-50">I'm Damilare Olaniyi</h2>
+
+
+
+          <h1 class="display-4 fw-bold" style="font-family: 'poppins' sans-serif;">A <span class="changeSkill"> Frontend
+              Developer </span></h1>
+          <p class="lead text-white-50">Graphic Designer | Frontend Developer | UI/UX Designer</p>
+
+          <div class="social-icons mt-3 mb-3">
+            <a href="https://www.facebook.com/profile.php?id=61582470131347" target="_blank"><i
+                class="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/olaniyidami162" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com/olaniyidami162" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@olaniyidami162" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://behance.net/damilareolaniyi12" target="_blank"><i class="fab fa-behance"></i></a>
+          </div>
+
+          <a href="#portfolio" class="btn me-4" style="background-color: #6c63ff;">View My Work</a>
+          <a href="TheDreyStudio_Resume.pdf" class="btn btn-outline-light" download>Download
+            Resume
+          </a>
+
+        </div>
+
+
+
+
+
+        <script>
+
+          document.addEventListener('DOMContentLoaded', function (event) {
+            // array with texts to type in typewriter
+            var dataText = ["Ui/Ux Designer", "Frontend Developer", "Online Store Designer", "Graphic Designer", "UX Researcher", "Framer Web Designer"];
+
+            // type one text in the typwriter
+            // keeps calling itself until the text is finished
+            function typeWriter(text, i, fnCallback) {
+              // chekc if text isn't finished yet
+              if (i < (text.length)) {
+                // add next character to h1
+                document.querySelector(".changeSkill").innerHTML = text.substring(0, i + 1) + '<span class="typing" ></span>';
+
+                // wait for a while and call this function again for next character
+                setTimeout(function () {
+                  typeWriter(text, i + 1, fnCallback)
+                }, 120);
+              }
+
+              // text finished, call callback if there is a callback function
+              else if (typeof fnCallback == 'function') {
+                // call callback after timeout
+                setTimeout(fnCallback, 700);
+              }
+            }
+            // start a typewriter animation for a text in the dataText array
+            function StartTextAnimation(i) {
+              // check if dataText[i] exists
+              if (i < dataText.length) {
+                // text exists! start typewriter animation
+                typeWriter(dataText[i], 0, function () {
+                  // after callback (and whole text has been animated), start next text
+                  StartTextAnimation((i + 1) % dataText.length);
+                });
+              }
+            }
+            // start the text animation
+            StartTextAnimation(0);
+          });
+        </script>
+
+
+
+
+        <div class="col-md-5 ms-5">
+          <img src="Damilare Social profile.jpg" class="profile-img img-fluid" style="z-index:auto;"
+            alt="digital art image">
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <!--Counter Section-->
+  <section class="stats-section  text-white text-center mt-5" data-aos-delay="100" data-target="1200">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <h2><span class="counter" data-target="40">0</span>%</h2>
+          <p>Website Conversion Rates</p>
+        </div>
+
+        <div class="col-md-3">
+          <h2><span class="counter" data-target="5">0</span>%</h2>
+          <p>Increase in CTR</p>
+        </div>
+
+        <div class="col-md-3">
+          <h2><span class="counter" data-target="95">0</span>%</h2>
+          <p>Client retention rate</p>
+        </div>
+
+        <div class="col-md-3">
+          <h2><span class="counter" data-target="40">0</span>%</h2>
+          <p>Increase in ROI</p>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </section>
+
+  <!--About section -->
+  <div class="container  p-4" id="about" style="background-color: #111113;">
+    <h3 class="h3 display-4 text-center mt-5">Little About Me</h3>
+    <div class="paracontainer    mx-auto mt-5" style="width: 100%; display: inline">
+      <p class="para p-3 mb-5">I'm Damilare Olaniyi, CEO of TheDrey Studio. I help brands and businesses bring their
+        ideas to life with designs and digital experiences that truly connect with their audience. I create visuals,
+        websites, and interfaces that are not only beautiful but also functional, solving real problems like low
+        engagement, unclear messaging, and weak brand presence. My work ensures every project looks professional,
+        communicates clearly, and delivers results. Let’s build something modern, creative, and unforgettable that makes
+        your brand stand out.</p>
+    </div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs justify-content-around fade show" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active " id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+          role="tab" aria-controls="home" aria-selected="true" syle="background-color: #6c63ff;">
+          Frontend
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+          role="tab" aria-controls="profile" aria-selected="false">
+          Design & UI/UX
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link " id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button"
+          role="tab" aria-controls="messages" aria-selected="false">
+          Online Store/No-code Web
+        </button>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active  mt-5 ms-3" id="home" role="tabpanel" aria-labelledby="home-tab">
+        I build websites that are not only visually appealing but also fast and easy to use. I focus on writing clean
+        code
+        and creating responsive layouts so every site works perfectly on all devices. From simple pages to interactive
+        applications, I bring ideas to life in ways that look modern, professional, and user-friendly. My goal is to
+        make sure every
+        visitor has a smooth and enjoyable experience. Let’s create a website that stands out and makes an impact
+        <h2 class="h4 mt-5">Tools I work With:</h2>
+
+        <div class="row justify-content-around mt-3">
+          <div class="col-md-3  rounded  mt-5 pt-2 ">
+            <img class="img-fluid   mt-3 mx-auto d-block" src="html.png" alt=" Html logo" style="width: 40%; ">
+            <h2 class="h4 mt-3 text-center ">Html</h2>
+            <p class="text-muted text-center ">I use HTML to structure websites and create an organized layouts that
+              form foundation of web-page.
+
+            </p>
+          </div>
+          <!--Column 2 of design-->
+          <div class="col-md-3 rounded mt-5 pt-2 ">
+            <img class="img-fluid   mt-3 mx-auto d-block" src="css.png" alt="CSS logo" style="width: 50%; ">
+            <h2 class="h4 mt-3 text-center">Css</h2>
+            <p class="text-muted text-center">I use CSS to style websites, making layouts, colors, and fonts look
+              polished and professional.</p>
+          </div>
+          <!--Column 3 of design-->
+          <div class="col-md-3 mt-5 pt-2 rounded ">
+            <img class="img-fluid  mt-3 mx-auto d-block" src="js.png" alt="javascript logo" style="width: 40%;">
+            <h2 class="h4 mt-3 text-center">JavaScript</h2>
+            <p class="text-muted text-center">I add interactivity with JavaScript, making websites dynamic and engaging
+              for users.</p>
+          </div>
+        </div>
+
+
+
+        <div class="row justify-content-around mt-3">
+          <div class="col-md-3  rounded  mt-5 pt-2 ">
+            <img class="img-fluid mt-3 mx-auto d-block" src="Bootstrap logo.png" alt="Bootstrap logo"
+              style="width: 60%;">
+            <h2 class="h4 mt-3 text-center">Bootstrap</h2>
+            <p class="text-muted text-center ">I use Bootstrap to build responsive websites that look great on any
+              device, quickly and efficiently.
+
+            </p>
+          </div>
+          <!--Column 2 of design-->
+          <div class="col-md-3 rounded mt-5 pt-2 ">
+            <img class="img-fluid  mt-3 mx-auto d-block" src="tailwind.png" alt="Tailwind logo" style="width: 60%;  ">
+            <h2 class="h4 mt-3 text-center">Tailwind Css</h2>
+            <p class="text-muted text-center">I use Tailwind to craft custom, modern designs faster, keeping websites
+              clean and professional.</p>
+          </div>
+          <!--Column 3 of design-->
+          <div class="col-md-3 mt-5 pt-2 rounded ">
+            <img class="img-fluid  mt-3 mx-auto d-block" src="jquery.png" alt="Jquery logo" style="width: 30%; ">
+            <h2 class="h4 mt-3 text-center">Jquery</h2>
+            <p class="text-muted text-center">I simplify website interactions and animations with jQuery, making user
+              experiences smoother.</p>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="tab-pane mt-5 ms-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        I design websites, apps, and landing pages that are simple, clear, and engaging. My work focuses on B2B
+        platforms, SaaS products, startups,
+        and more, ensuring that every interface is intuitive and visually appealing. I combine creativity with usability
+        to guide users naturally and
+        communicate your message effectively. Every design is crafted to leave a lasting impression while helping your
+        business grow. Together, we can turn your
+        ideas into designs that truly connect with your audience.
+
+        <h2 class="h4 mt-5">Tools I work With:</h2>
+
+        <div class="row justify-content-around mt-3">
+          <div class="col-md-3  rounded  mt-5 pt-2 ">
+            <img class="img-fluid    mt-3 mx-auto d-block" src="photoshop.png" alt="Photoshop logo" style="width: 30%;">
+            <h2 class="h4 mt-3 text-center ">Adobe Photoshop</h2>
+            <p class="text-muted text-center ">I use Photoshop to create clean graphics and enhance images for
+              professional-looking designs.
+
+            </p>
+          </div>
+          <!--Column 2 of design-->
+          <div class="col-md-3 rounded mt-5 pt-2 ">
+            <img class="img-fluid   mt-3 mx-auto d-block" src="lightroom.png" alt="lightroom logo" style="width:30%;">
+            <h2 class="h4 mt-3 text-center">Adobe Lightroom</h2>
+            <p class="text-muted text-center">I use Lightroom to improve image quality and lighting, making photos look
+              clean and consistent.</p>
+          </div>
+          <!--Column 3 of design-->
+          <div class="col-md-3 mt-5 pt-2 rounded ">
+            <img class="img-fluid  mt-3 mx-auto d-block" src="canva.png" alt="canva logo" style="width: 50%;">
+            <h2 class="h4 mt-3 text-center">Canva</h2>
+            <p class="text-muted text-center">I use Canva to create quick, simple, and beautiful visuals for marketing,
+              and social media.</p>
+          </div>
+        </div>
+
+
+
+        <div class="row justify-content-around mt-3">
+          <div class="col-md-3  rounded  mt-5 pt-2 ">
+            <img class="img-fluid   mt-3 mx-auto d-block" src="figma.png" alt="figma logo" style="width: 50%;">
+            <h2 class="h4 mt-3 text-center">Figma</h2>
+            <p class="text-muted text-center ">I use Figma to design websites and app interfaces that are modern, clear,
+              and easy for users.
+
+            </p>
+          </div>
+          <!--Column 2 of design-->
+          <div class="col-md-3 rounded mt-5 pt-2 ">
+            <img class="img-fluid  mt-3 mx-auto d-block" src="Pixlr.png" alt="Pixlr logo"
+              style="width: 30%;  border-radius: 100%;">
+            <h2 class="h4 mt-3 text-center">Pixlr</h2>
+            <p class="text-muted text-center">I use Pixlr to quickly edit photos and create clean, polished visuals for
+              any project.</p>
+          </div>
+          <!--Column 3 of design-->
+          <div class="col-md-3 mt-5 pt-2 rounded ">
+            <img class="img-fluid  mt-3 mx-auto d-block" src="kittl-social-preview-removebg-preview.png"
+              alt="kittl logo" style="width: 60%;  border-radius: 100%;">
+            <h2 class="h4 mt-3 text-center">Kittl</h2>
+            <p class="text-muted text-center">I use Kittl to design professional graphics and layouts easily, bringing
+              creative ideas to life.</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="tab-pane mt-5 ms-3" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+        I help businesses build professional online stores and custom no-code websites. Whether it’s a Shopify store for
+        selling products or a fully custom site
+        built with modern no-code tools, I focus on creating platforms that are easy to manage, look professional, and
+        attract customers. I turn ideas into websites
+        that not only look great but also help grow your business by making it simple for visitors to explore, engage,
+        and purchase. Let’s create an online presence
+        that drives real results and makes your brand shine
+        <h2 class="h4 mt-5">Tools I work With:</h2>
+
+        <div class="row justify-content-around mt-3">
+          <div class="col-md-3  rounded  mt-5 pt-2 ">
+            <img class="img-fluid mx-auto d-block" src="shopify.png" alt="shopify logo" style="width: 70%; ">
+            <h2 class="h4 text-center ">Shopify</h2>
+            <p class="text-muted text-center ">I use Shopify to build professional online stores that are easy to manage
+              and ready to sell.
+
+            </p>
+          </div>
+          <!--Column 2 of design-->
+          <div class="col-md-3 rounded mt-5 pt-2 ">
+            <img class="img-fluid  mt-3 mx-auto d-block" src="wordpress.png" alt="wordpress logo" style="width: 30%;">
+            <h2 class="h4 mt-3 text-center">Wordpress</h2>
+            <p class="text-muted text-center">I use WordPress to create custom websites that are flexible, professional,
+              and easy to update.</p>
+          </div>
+          <!--Column 3 of design-->
+          <div class="col-md-3 mt-5 pt-2 rounded ">
+            <img class="img-fluid mt-3 mx-auto d-block" src="wix.png" alt="wix logo" style="width: 30%;">
+            <h2 class="h4 mt-3 text-center">Wix</h2>
+            <p class="text-muted text-center">I use Wix to design simple, modern websites quickly with a smooth,
+              user-friendly experience.</p>
+          </div>
+        </div>
+
+
+
+        <div class="row justify-content-around mt-3">
+          <div class="col-md-3  rounded  mt-5 pt-2 ">
+            <img class="img-fluid  mt-3 mx-auto d-block" src="framer.png" alt="framer logo" style="width: 50%; ">
+            <h2 class="h4 mt-3 text-center">Framer</h2>
+            <p class="text-muted text-center ">I use Framer to build interactive, visually appealing websites that feel
+              modern and dynamic.
+
+            </p>
+          </div>
+          <!--Column 2 of design-->
+          <div class="col-md-3 rounded mt-5 pt-2 ">
+            <img class="img-fluid  mt-3 mx-auto d-block" src="webflow.png" alt="webflow logo"
+              style="width: 40%; border-radius: 100%;">
+            <h2 class="h4 mt-3 text-center">Webflow</h2>
+            <p class="text-muted text-center">I use Webflow to design custom, responsive websites that combine style and
+              functionality.</p>
+          </div>
+          <!--Column 3 of design-->
+          <div class="col-md-3 mt-5 pt-2 rounded ">
+            <img class="img-fluid  mt-3 mx-auto d-block" src="squarespaca.png" alt="squarespace logo"
+              style="width: 70%;  border-radius: 100%;">
+            <h2 class="h4 mt-3 text-center">SquareSpace</h2>
+            <p class="text-muted text-center">I use Squarespace to create easy-to-manage websites that showcase your
+              brand beautifully.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <!--Service Section-->
+  <div class="container-fluid p-2" id="service">
+    <h1 class="display-4 pt-5 text-center">What I Do As A Designer</h1>
+
+    <!--Row 1 of design-->
+    <!--Column 1 of design-->
+    <div class="row justify-content-around mt-5 pt-5 p-5">
+      <div class="col-md-3 designer rounded mt-5 pt-3 first" style="cursor: pointer; background-color: #a29bfe;" data-aos="fade-up" data-aos-delay="5" >
+        <img class="card-img-top   rounded-2 mt-3 " src="design images/gXKe2ANoRziGnnFdWRET_g.jpg" alt="Print Design"
+          style="width: 100%;">
+        <h2 class="display-7 mt-4">Print Design</h2>
+        <hr>
+        <p class="text-left">I design eye-catching print materials like flyers, banners, book covers, and professional
+          CVs. Your online presence needs to look as professional.
+
+        </p>
+      </div>
+      <!--Column 2 of design-->
+      <div class="col-md-3 designer rounded mt-5 pt-3 text-left second"
+        style="cursor: pointer; background-color: #6c5ce7; " data-aos="fade-up" data-aos-delay="20">
+        <img class="card-img-top rounded-2 mt-3" src="social media design.jpeg" alt="Social Media Design"
+          style="width: 100%;">
+        <h2 class="display-7 mt-4">Social Media Design</h2>
+        <hr>
+        <p>From Instagram posts to YouTube thumbnails and promotional ads, I create scroll-stopping visuals tailored for
+          social platforms.</p>
+      </div>
+      <!--Column 3 of design-->
+      <div class="col-md-3 designer mt-5 pt-3 rounded  text-left third"
+        style="cursor: pointer; background-color:  #b388eb;" data-aos="fade-up" data-aos-delay="50">
+        <img class="card-img-top rounded-2 mt-3" src="brand identityy.jpeg" alt="Branding Identity"
+          style="width: 100%;">
+        <h2 class="display-7 mt-4">Branding & Identity</h2>
+        <hr>
+        <p>I craft logos and full brand identity, including business cards, letterheads, and brand guides to help
+          businesses stand out.</p>
+      </div>
+    </div>
+    <!-- Row 2 of Design -->
+
+    <!--Column 1 of Row 2 design-->
+    <div class="row justify-content-around  mt-5 pt-5 p-5">
+      <div class="col-md-3 designer rounded pt-3 mt-5 text-left four"
+        style="cursor: pointer; background-color:#a29bfe; ">
+        <img class="card-img-top rounded-2 mt-3" src="design images/movie poster.png" alt="Poster Design"
+          style="width: 100%;">
+        <h2 class="display-7 mt-4">Poster Design</h2>
+        <hr>
+        <p class="text-left">I specialize in bold and cinematic poster designs, whether it's for movies, or campaigns.
+          My posters are built to attract at a glance.</p>
+      </div>
+      <!--Column 2 of Row 2 design-->
+      <div class="col-md-3 designer rounded  mt-5 pt-3 text-left five"
+        style="cursor: pointer; background-color: #6c5ce7;">
+        <img class="card-img-top rounded-2 mt-3" src="design images/advertising.png" alt="Advertising Design"
+          style="width: 100%;">
+        <h2 class="display-7 mt-4">Advertising Design</h2>
+        <hr>
+        <p>I design impactful visuals for street ads, and promo campaigns. These designs are built for visibility, and
+          attention.
+
+        </p>
+      </div>
+      <!--Column 3 of Row 2 design-->
+      <div class="col-md-3 designer rounded mt-5 pt-3 text-left six"
+        style="cursor: pointer; background-color:  #b388eb;">
+        <img class="card-img-top rounded-2 mt-3" src="design images/user interface.png" alt=" UI/UX design"
+          style="width: 100%;">
+        <h2 class="display-7 mt-4">UI/UX Design</h2>
+        <hr>
+        <p>I create clean, UI designs for web and mobile apps, including graphic elements like icons, and layout visuals
+          that enhance the user experience.</p>
+      </div>
+    </div>
+
+    <!--Row 3 of Design-->
+    <!--Column 1 of Row 2 design-->
+    <div class="row justify-content-around  mt-5 pt-5 p-5">
+      <div class="col-md-3 designer rounded pt-3 mt-5 text-left seven"
+        style="cursor: pointer; background-color:  #a29bfe;">
+        <img class="card-img-top rounded-2 mt-3" src="design images/publication.jpg" alt="Digital Publication"
+          style="width: 100%;">
+        <h2 class="display-7 mt-4">Digital Publication</h2>
+        <hr>
+        <p class="text-left">From ebooks to interactive PDFs and email newsletter templates, I layout digital content
+          that’s easy to read, professional, and visually pleasing.</p>
+      </div>
+      <!--Column 2 of Row 2 design-->
+      <div class="col-md-3 designer mt-5 pt-3 rounded text-left eight"
+        style="cursor: pointer; background-color: #6c5ce7;">
+        <img class="card-img-top rounded-2 mt-3" src="design images/product packaging.jpg" alt="Product packaging"
+          style="width: 100%;">
+        <h2 class="display-7 mt-4">Product packaging</h2>
+        <hr>
+        <p>I bring your product to life with beautiful packaging and label designs, along with branded t-shirts and
+          merchandise.</p>
+      </div>
+      <!--Column 3 of Row 2 design-->
+      <div class="col-md-3 designer mt-5 pt-3 rounded  text-left nine"
+        style="cursor: pointer; background-color: #b388eb;">
+        <img class="card-img-top rounded-2 mt-3" src="design images/figma preview.jpg" alt="Website Design"
+          style="width: 100%;">
+        <h2 class="display-7 mt-4">Website Design</h2>
+        <hr>
+        <p>I design modern and responsive website interfaces using Figma, focusing on clean layouts, intuitive
+          navigation, and user-centered design. </p>
+      </div>
+      <button class="btn btn-sm ms-5 hire
+       mt-5
+       " style="background-color: #6c63ff; width: 60%;" data-bs-target="#modalId" data-bs-toggle="modal"
+        type="button">Hire Me As Your Designer
+      </button>
+    </div>
+
+
+    <h1 class="display-4 pt-5 text-center">What I Do As A Developer</h1>
+    <!--Row 1 of developer-->
+    <!--Column 1 of developer-->
+    <div class="row justify-content-around mt-5 pt-5 p-5">
+      <div class="col-md-3 designer  rounded pt-3 mt-5 text-left first"
+        style="cursor: pointer; background-color: #a29bfe;">
+        <img class="card-img-top rounded-2 mt-3" src="developer image/responsive web.jpeg" alt="" style="width: 100%;">
+        <h2 class="display-7 mt-4"> Responsive Website</h2>
+        <hr>
+        <p class="text-left">I build websites that look great and work smoothly on all devices, from desktop to mobile
+          ensuring a consistent and professional experience for every visitor.
+
+
+        </p>
+      </div>
+
+      <!--Column 2 of developer-->
+      <div class="col-md-3 designer rounded pt-3 mt-5 second text-left"
+        style="cursor: pointer; background-color: #6c5ce7;">
+        <img src="developer image/animation.jpeg" class="card-img-top rounded-2 mt-3" alt="" style="width: 100%;">
+        <h2 class="display-7 mt-4">Interactive Website </h2>
+        <hr>
+        <p>I add subtle animations and interactions that make websites
+          feel modern, engaging, and easy to use without slowing them down.
+
+        </p>
+      </div>
+
+      <!--column 3 of developer-->
+      <div class="col-md-3  designer pt-3 mt-5 rounded  text-left third"
+        style="cursor: pointer; background-color: #b388eb;">
+        <img class="card-img-top rounded-2 mt-3" src="developer image/performance.jpeg" alt="" style="width: 100%;">
+        <h2 class="display-7 mt-4"> Custom UI Components</h2>
+        <hr>
+        <p>I create custom interface elements like sliders, pop-ups,
+          and FAQs that improve usability and keep users engaged.
+
+        </p>
+      </div>
+    </div>
+    <!--Column 4 of developer-->
+    <div class="row justify-content-around mt-5 pt-5 p-5">
+      <div class="col-md-3 designer pt-3 mt-5 rounded text-left first"
+        style="cursor: pointer; background-color: #a29bfe;">
+        <img class="card-img-top rounded-2 mt-3" src="developer image/optimize.jpeg" alt="" style="width: 100%;">
+        <h2 class="display-7 mt-4">Performance Optimization</h2>
+        <hr>
+        <p class="text-left">I optimize websites for speed and
+          smooth performance, helping visitors load pages faster and stay longer.
+      </div>
+
+      <!--Column 5 of developer-->
+      <div class="col-md-3 designer rounded second text-left pt-3 mt-5"
+        style="cursor: pointer; background-color: #6c5ce7;">
+        <img src="developer image/figma to code.jpeg" class="card-img-top rounded-2 mt-3" alt="" style="width: 100%;">
+        <h2 class="display-7 mt-4">UI Design to Website</h2>
+        <hr>
+        <p>I transform design concepts into fully functional websites that stay
+          true to the original layout while working seamlessly online.
+
+        </p>
+      </div>
+
+      <!--column 6 of developer-->
+      <div class="col-md-3 designer rounded pt-3 mt-5 text-left third"
+        style="cursor: pointer; background-color: #b388eb;">
+        <img class="card-img-top rounded-2 mt-3" src="developer image/cross browser.jpeg" alt="" style="width: 100%;">
+        <h2 class="display-7 mt-4"> Cross-Browser Compatibility</h2>
+        <hr>
+        <p>I ensure your website looks and works consistently for all
+          users, no matter the browser or device they use.
+        </p>
+      </div>
+    </div>
+
+    <!--Column 7 of developer-->
+    <div class="row justify-content-around mt-5 pt-3 p-5">
+      <div class="col-md-3 designer pt-3 mt-5 rounded text-left first"
+        style="cursor: pointer; background-color: #a29bfe;">
+        <img class="card-img-top rounded-2 mt-3" src="developer image/seo.jpeg" alt="" style="width: 100%;">
+        <h2 class="display-7 mt-4">SEO-Ready</h2>
+        <hr>
+        <p class="text-left">I structure websites properly so search engines can easily
+          understand and rank your pages, improving visibility online.</p>
+      </div>
+
+      <!--Column 8 of developer-->
+      <div class="col-md-3 designer rounded second text-left mt-5 pt-3"
+        style="cursor: pointer; background-color: #6c5ce7;">
+        <img src="developer image/host.jpeg" class="card-img-top rounded-2 mt-3" alt="" style="width: 100%;">
+        <h2 class="display-7 mt-4">Hosting & Deployment</h2>
+        <hr>
+        <p>I help launch your website smoothly, making
+          sure everything is secure, fast, and ready for real users.</p>
+      </div>
+
+      <!--column 9 of developer-->
+      <div class="col-md-3 designer mt-5 pt-3 rounded  text-left third"
+        style="cursor: pointer; background-color: #b388eb;">
+        <img class="card-img-top rounded-2 mt-3" src="developer image/maintanace.jpeg" alt="" style="width: 100%;">
+        <h2 class="display-7 mt-4">Website Maintenance</h2>
+        <hr>
+        <p>I provide ongoing updates and improvements
+          to keep your website secure, modern, and performing at its best. </p>
+      </div>
+    </div>
+    <button class="btn btn-sm  hire mx-auto d-block " style="background-color: #6c63ff; width: 60%; "
+      data-bs-target="#modalId" data-bs-toggle="modal" type="button">Hire Me As Your Developer</button>
+
+  </div>
+
+
+
+  <section class="container my-5">
+    <div class="row g-4 text-center p-3">
+
+      <h2 class="display-6 text-center p-5 mt-3">Why Choose Me As Your Designer?</h2>
+
+      <div class="col-md-4 mt-5">
+        <div class="feature-box p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="150">
+          <div class="icon-wrap mb-3 mx-auto">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h5 class="fw-bold">Fast Delivery</h5>
+          <p class="text-white-50">I deliver designs promptly without sacrificing quality.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4 mt-5">
+        <div class="feature-box p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="150">
+          <div class="icon-wrap mb-3 mx-auto">
+            <i class="fas fa-palette"></i>
+          </div>
+          <h5 class="fw-bold">Creative Design</h5>
+          <p class="text-white-50">I make bold, modern designs that turn heads and grab attention.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4 mt-5">
+        <div class="feature-box p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="150">
+          <div class="icon-wrap mb-3 mx-auto">
+            <i class="fa-solid fa-user-tie"></i>
+          </div>
+          <h5 class="fw-bold">Client First</h5>
+          <p class="text-white-50">Your idea matters. I listen, adapt, and deliver what you want.
+
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-4 mt-5">
+        <div class="feature-box p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="150">
+          <div class="icon-wrap mb-3 mx-auto">
+            <i class="fa-solid fa-lightbulb"></i>
+          </div>
+          <h5 class="fw-bold">Innovative Ideas </h5>
+          <p class="text-white-50">Smart solutions for modern problems, creativity with purpose</p>
+        </div>
+      </div>
+
+      <div class="col-md-4 mt-5">
+        <div class="feature-box p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="150">
+          <div class="icon-wrap mb-3 mx-auto">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <h5 class="fw-bold">Sharp Details</h5>
+          <p class="text-white-50">From colors to spacing, every element is crafted with care.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4 mt-5">
+        <div class="feature-box p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="150">
+          <div class="icon-wrap mb-3 mx-auto">
+            <i class="fa-solid fa-fire"></i>
+          </div>
+          <h5 class="fw-bold">Trend-Savvy</h5>
+          <p class="text-white-50">I keep up with design trends to keep your brand fresh.
+          </p>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+  <!--Why choose me as your developer-->
+
+
+
+  <section class="container my-5">
+    <div class="row g-4 text-center p-3">
+
+      <h2 class="display-6 text-center p-5 mt-5">Why Choose Me As Your Developer?</h2>
+
+      <div class="col-md-4 mt-5">
+        <div class="feature-box p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="150">
+          <div class="icon-wrap mb-3 mx-auto">
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <h5 class="fw-bold">Reliable Build</h5>
+          <p class="text-white-50">I create well-structured websites that are easy to manage, update, and scale.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4 mt-5">
+        <div class="feature-box p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="150">
+          <div class="icon-wrap mb-3 mx-auto">
+            <i class="fa-solid fa-mobile-screen"></i>
+          </div>
+          <h5 class="fw-bold">Fully Responsive</h5>
+          <p class="text-white-50">Every layout works smoothly and flawlessly on all screen sizes.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4 mt-5">
+        <div class="feature-box p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="150">
+          <div class="icon-wrap mb-3 mx-auto">
+            <i class="fa-solid fa-hand-pointer"></i>
+          </div>
+          <h5 class="fw-bold">Smooth UX</h5>
+          <p class="text-white-50">Cool, subtle animations implemented for a better user experience.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-4 mt-5">
+        <div class="feature-box p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="150">
+          <div class="icon-wrap mb-3 mx-auto">
+            <i class="fa-solid fa-object-group"></i>
+          </div>
+          <h5 class="fw-bold">Design Accuracy</h5>
+          <p class="text-white-50">I bring designs to life exactly as intended, layout, and visual
+            balance.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4 mt-5">
+        <div class="feature-box p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="150">
+          <div class="icon-wrap mb-3 mx-auto">
+            <i class="fa-solid fa-gauge-high"></i>
+          </div>
+          <h5 class="fw-bold">Fast & Light</h5>
+          <p class="text-white-50">Optimized for speed, SEO, and better performance.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4 mt-5">
+        <div class="feature-box p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="150">
+          <div class="icon-wrap mb-3 mx-auto">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <h5 class="fw-bold">Ongoing Support</h5>
+          <p class="text-white-50">Dedicated support to fix issues and improve performance.
+
+          </p>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+
+  <!--portfolio-->
+
+  <section class="container " id="portfolio">
+    <!--Design portfolio-->
+    <!--Row 1-->
+    <div class="row mt-5 p-3">
+      <h1 class="display-7 text-center pt-4 mt-5"> Explore Through My Portfolio</h1>
+
+      <h2 class="text-center display-6 mt-4 pt-4">Portfolio As A Designer</h2>
+      <!--column 1 row 1-->
+      <div class="col-md-4 mt-5 ">
+        <div class="port-wrap rounded p-4 shadow-sm " data-aos="fade-up" data-aos-delay="200">
+          <a href="https://www.behance.net/gallery/239625333/Modern-Brand-Logo-Design-for-Bitnova-Tech-Brand" target="_blank">
+            <img src="design portfolio/Bitnova moodboard logo.jpg" class="card-img-top rounded" alt="">
+          </a>
+          <span class="badge mt-2 fw-light"
+            style="background-color: #6c63ff; font-family: 'Courier New', Courier, ;">Logo design</span>
+          <h2 class="display-7 mt-3">Logo Branding</h2>
+          <p class="mb-4 text-white-50">I design modern, clarity-driven brand identities for startups and
+            services with strong structure, clean spacing, and versatile logo designs built to scale.</p>
+          <span class="btn" style="background-color: #6c63ff;"><a
+              href="https://www.behance.net/gallery/239625333/Modern-Brand-Logo-Design-for-Bitnova-Tech-Brand" target="_blank"
+              class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+        </div>
+      </div>
+
+      <!--column 2 row 1-->
+      <div class="col-md-4 mt-5">
+        <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+          <a href="https://www.behance.net/gallery/240400543/Premium-Clothing-Brand-Flyer-Design" target="_blank">
+            <img src="luxury you can feel.jpeg" class="card-img-top" alt="">
+          </a>
+          <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Flyer design</span>
+          <h2 class="display-7 mt-3">Luxury Flyer design</h2>
+          <p class="mb-4 text-white-50">I craft eye-catching, high-impact luxury flyers for events, brands, and promotions with elegant layouts, 
+            vibrant visuals,  that grab attention instantly.</p>
+          <span class="btn" style="background-color: #6c63ff;"><a
+              href="https://www.behance.net/gallery/240400543/Premium-Clothing-Brand-Flyer-Design" target="_blank"
+              class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+        </div>
+      </div>
+
+      <!--column 3 row 1-->
+      <div class="col-md-4 mt-5">
+        <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+          <a href="https://www.behance.net/gallery/233698927/Haven-Edge-Real-Estate-Professional-Flyer-Design-Series"
+            target="_blank">
+            <img src="design portfolio/your home is closer.jpg" class="card-img-top" alt="">
+          </a>
+          <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Social media
+            design</span>
+          <h2 class="display-7 mt-3">Real Estate Design</h2>
+          <p class="mb-4 text-white-50">I create clean, engaging social media designs for brands and services
+            with bold visuals, clear layout, and structured compositions built for attention</p>
+          <span class="btn" style="background-color: #6c63ff;"><a
+              href="https://www.behance.net/gallery/233698927/Haven-Edge-Real-Estate-Professional-Flyer-Design-Series"
+              target="_blank" class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a>
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!--Row 2-->
+    <div class="row  p-3">
+
+      <!--column 1 row 2-->
+      <div class="col-md-4 mt-5 ">
+        <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+          <a href="https://www.behance.net/gallery/235906301/Artistry-Skincare-Branding-Packaging-Design"
+            target="_blank">
+            <img src="design portfolio/artistry signwall.jpg" class="card-img-top rounded" alt="">
+          </a>
+          <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Product
+            design</span>
+          <h2 class="display-7 mt-3">Cream Design</h2>
+          <p class="mb-4 text-white-50">I create clean, appealing cream product designs for beauty brands with soft
+            visuals,
+            clear layout, and structured compositions crafted for clarity.</p>
+          <span class="btn" style="background-color: #6c63ff;"><a
+              href="https://www.behance.net/gallery/239625419/Modern-Brand-Logo-Design-for-Bitnova" target="_blank"
+              class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+        </div>
+      </div>
+
+      <!--column 2 row 2-->
+      <div class="col-md-4 mt-5">
+        <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+          <a href="https://www.behance.net/gallery/235766245/Cinematic-Poster-Design-Modern-Movie-Art-Concept"
+            target="_blank">
+            <img src="design portfolio/Drey movie.jpg" class="card-img-top" alt="">
+          </a>
+          <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Cinematic
+            design</span>
+          <h2 class="display-7 mt-3">Movie Poster</h2>
+          <p class="mb-4 text-white-50">I create bold, cinematic movie poster designs with strong composition, clear
+            hierarchy,
+            and engaging visuals crafted to capture attention and build anticipation.</p>
+          <span class="btn" style="background-color: #6c63ff;"><a
+              href="https://www.behance.net/gallery/235766245/Cinematic-Poster-Design-Modern-Movie-Art-Concept"
+              target="_blank" class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a>
+          </span>
+        </div>
+      </div>
+
+      <!--column 3 row 2-->
+      <div class="col-md-4 mt-5">
+        <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+          <a href="https://www.behance.net/gallery/235767605/Skincare-Branding-Packaging-Design" target="_blank">
+            <img src="design portfolio/pricillia skincare design.jpg" class="card-img-top" alt="">
+          </a>
+          <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Product
+            design</span>
+          <h2 class="display-7 mt-3">Skincare Design</h2>
+          <p class="mb-4 text-white-50">I create clean skincare designs with soft visuals, clear layout,
+            and structured compositions crafted to support strong brand identity.</p>
+          <span class="btn" style="background-color: #6c63ff;"><a
+              href="https://www.behance.net/gallery/235767605/Skincare-Branding-Packaging-Design" target="_blank"
+              class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="btn btn-md loadmore mx-auto " id="loadmore"
+      style="background-color: #6c63ff; width: 60%; display: block;">Load
+      More</button>
+    <!--first load more-->
+    <div class="container" id="reveal" style="display: none;">
+      <!--row 3-->
+      <div class="row  p-3">
+
+        <!--column 1 row 3-->
+        <div class="col-md-4 mt-5 ">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://www.behance.net/gallery/236141195/ShutterSpeed-Photography-Brand-Identity" target="_blank">
+              <img src="design portfolio/shutterspeed moodboard logo.jpg" class="card-img-top " alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">logo
+              design</span>
+            <h2 class="display-7 mt-3">Logo branding</h2>
+            <p class="mb-4 text-white-50">I design modern, clarity-driven brand identities for startups and services
+              with
+              strong structure, clean spacing, and versatile logo designs built to scale.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/236141195/ShutterSpeed-Photography-Brand-Identity" target="_blank"
+                class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+
+          </div>
+        </div>
+        <!--column 2 row 3-->
+        <div class="col-md-4 mt-5">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://www.behance.net/gallery/236140883/August-New-Month-Flyer-Design" target="_blank">
+              <img src="design portfolio/NEW MONTH FLYER.jpg" class="card-img-top" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Social Media
+              design</span>
+            <h2 class="display-7 mt-3">Content Design</h2>
+            <p class="mb-4 text-white-50">I create engaging social media designs with bold visuals, clear layout,
+              and structured compositions crafted to boost brand communication.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/236140883/August-New-Month-Flyer-Design" target="_blank"
+                class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+
+          </div>
+        </div>
+        <!--column 3 row 3-->
+        <div class="col-md-4 mt-5">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://www.behance.net/gallery/235311065/Food-Brand-Identity-Design" target="_blank">
+              <img src="design portfolio/Dudu's chips.jpg" class="card-img-top" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Chinchin ads
+              design</span>
+            <h2 class="display-7 mt-3">Ads Design</h2>
+            <p class="mb-4 text-white-50">I create eye-catching chinchin ad designs with bold visuals, clear layout, and
+              structured compositions crafted to capture attention and boost sales.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/235311065/Food-Brand-Identity-Design" target="_blank"
+                class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+          </div>
+        </div>
+
+      </div>
+      <!--Row 4-->
+      <div class="row p-3">
+        <!--column 1 row 4-->
+        <div class="col-md-4 mt-5 ">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://www.behance.net/gallery/236347005/300-YouTube-Subscribers-Celebration-Design"
+              target="_blank">
+              <img src="design portfolio/youtube subs design copy.jpg" class="card-img-top rounded" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Social Media
+              Flyer</span>
+            <h2 class="display-7 mt-3">Promotional Flyer</h2>
+            <p class="mb-4 text-white-50">I create vibrant promotional flyer designs with clear layout, bold visuals,
+              and
+              structured compositions crafted to attract attention and drive engagement.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/236347005/300-YouTube-Subscribers-Celebration-Design"
+                target="_blank" class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a>
+            </span>
+          </div>
+        </div>
+        <!--column 2 row 4-->
+        <div class="col-md-4 mt-5">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://www.behance.net/gallery/233848623/Modern-Shoe-Design-Creative-Footwear-Branding"
+              target="_blank">
+              <img src="design portfolio/Brand Awareness .jpg" class="card-img-top" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Flyer
+              design</span>
+            <h2 class="display-7 mt-3">Shoe Flyer Design</h2>
+            <p class="mb-4 text-white-50">I create dynamic shoe flyer designs with vibrant graphics, organized layout,
+              and engaging composition crafted to capture attention and drive sales.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/233848623/Modern-Shoe-Design-Creative-Footwear-Branding"
+                target="_blank" class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a>
+            </span>
+          </div>
+        </div>
+        <!--column 3 row 4-->
+        <div class="col-md-4 mt-5">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://www.behance.net/gallery/235311065/Food-Brand-Identity-Design" target="_blank">
+              <img src="design portfolio/Food flyer.jpg" class="card-img-top" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Flyer
+              design</span>
+            <h2 class="display-7 mt-3">Food Flyer Design</h2>
+            <p class="mb-4 text-white-50">I create vibrant food flyer designs with appetizing visuals, strong
+              hierarchy, cohesive composition crafted to attract and boost sales.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/235311065/Food-Brand-Identity-Design" target="_blank"
+                class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-md loadmore mx-auto " id="loadmore1"
+      style="background-color: #6c63ff; width: 60%; display: none;">Load More</button>
+    <!--first load more-->
+    <div class="container" id="reveal1" style="display: none;">
+      <!--row 3-->
+      <div class="row  p-3">
+
+        <!--column 1 row 3-->
+        <div class="col-md-4 mt-5 ">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://www.behance.net/gallery/235851353/Instabite-Chin-Chin-Branding-Packaging-Design"
+              target="_blank">
+              <img src="design portfolio/Chinchin ads design.jpg" class="card-img-top rounded" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;"></span>
+            <h2 class="display-7 mt-3">Chinchin branding</h2>
+            <p class="mb-4 text-white-50">I create modern chinchin branding with appetizing visuals, clean structure,
+              cohesive layout, and distinctive
+              identity crafted to attract customers and boost brand appeal.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/235851353/Instabite-Chin-Chin-Branding-Packaging-Design"
+                target="_blank" class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a>
+            </span>
+          </div>
+        </div>
+        <!--column 2 row 3-->
+        <div class="col-md-4 mt-5">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://www.behance.net/gallery/239625419/Modern-Brand-Logo-Design-for-Bitnova" target="_blank">
+              <img src="design portfolio/bitnova billboard.jpg" class="card-img-top" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Outdoor
+              Ads</span>
+            <h2 class="display-7 mt-3">Billboard Design</h2>
+            <p class="mb-4 text-white-50">I create bold billboard designs for Bitnova with clear messaging,
+              strong visuals, and cohesive composition crafted for quick visibility.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/239625419/Modern-Brand-Logo-Design-for-Bitnova" target="_blank"
+                class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+
+          </div>
+        </div>
+        <!--column 3 row 3-->
+        <div class="col-md-4 mt-5">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://www.behance.net/gallery/235393201/Save-the-Date-Flyer-Design-Event-Invitation-Graphic"
+              target="_blank">
+              <img src="design portfolio/Drey save the date 1.jpg" class="card-img-top" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Invitation
+              Design</span>
+            <h2 class="display-7 mt-3">Wedding Invitation </h2>
+            <p class="mb-4 text-white-50">I design elegant wedding invitation flyers with refined typography, soft
+              accents,
+              balanced layouts, and a personalized look for celebrations.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/235393201/Save-the-Date-Flyer-Design-Event-Invitation-Graphic"
+                target="_blank" class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+      <!--Row 4-->
+      <div class="row p-3">
+        <!--column 1 row 4-->
+        <div class="col-md-4 mt-5 ">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://www.behance.net/gallery/235245773/Jetlink-Logistics-Brand-Identity-Design" target="_blank">
+              <img src="jetlink car.jpeg" class="card-img-top " alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Flyer
+              design</span>
+            <h2 class="display-7 mt-3">Logistics Design</h2>
+            <p class="mb-4 text-white-50">I design professional logistics flyers with clear information flow, structured
+              layout, strong highlights,
+              and trust-focused visuals built to attract shipping clients.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/235245773/Jetlink-Logistics-Brand-Identity-Design" target="_blank"
+                class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+          </div>
+        </div>
+        <!--column 2 row 4-->
+        <div class="col-md-4 mt-5">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://www.behance.net/gallery/236140259/GGA-Fashion-Brand-Logo-Identity-Design" target="_blank">
+              <img src="gga.jpg" class="card-img-top" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Logo
+              design</span>
+            <h2 class="display-7 mt-3">Logo Branding</h2>
+            <p class="mb-4 text-white-50">I craft modern logo branding with clean structure, identity, clear symbolism,
+              and
+              professional visual balance designed to strengthen brand recognition.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/236140259/GGA-Fashion-Brand-Logo-Identity-Design" target="_blank"
+                class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+          </div>
+        </div>
+        <!--column 3 row 4-->
+        <div class="col-md-4 mt-5">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://www.behance.net/gallery/240399489/Luxury-Clothing-Brand-Flyer-Design"
+              target="_blank">
+              <img src="man evolving.jpeg" class="card-img-top" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Flyer
+              design</span>
+            <h2 class="display-7 mt-3">Clothing flyer Design</h2>
+            <p class="mb-4 text-white-50">I create stylish, attention-grabbing clothing flyers that showcase collections,  with  elegant layouts. Each design is optimized for readability and impact, ensuring your brand stands out.
+               </p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/240399489/Luxury-Clothing-Brand-Flyer-Design"
+                target="_blank" class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a>
+            </span>
+          </div>
+        </div>
+        <button class="btn btn-sm viewBehance mx-auto d-block mt-5" style="background-color: #6c63ff; width: 60%;">
+          <a href="https://behance.net/damilareolaniyi12" target="_blank" class="text-white text-decoration-none"> View
+            More Projects On Behance</a></button>
+      </div>
+    </div>
+
+
+
+
+    <div class="row mt-5 p-3">
+      <h2 class="text-center display-6 mt-4 pt-4"> Portfolio As A Developer</h2>
+      <!--column 1 row 1-->
+      <div class="col-md-4 mt-5 ">
+        <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+          <a href="https://www.quickiechores.com/" target="_blank">
+            <img src="quick2.jpg" class="card-img-top " alt="Logo design image">
+          </a>
+          <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Web App</span>
+          <h2 class="display-7 mt-3">Task Manager</h2>
+          <p class="mb-4 text-white-50">A streamlined platform to manage tasks efficiently, with a
+            clean layout, intuitive navigation, clean sections, and smooth user experience.</p>
+          <span class="btn" style="background-color: #6c63ff;"><a href="https://www.quickiechores.com/" target="_blank"
+              class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+        </div>
+      </div>
+
+      <!--column 2 row 1-->
+      <div class="col-md-4 mt-5">
+        <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+          <a href="https://chbluxuries.com/" target="_blank">
+            <img src="chbluxury.jpg" class="card-img-top " alt="">
+          </a>
+          <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">E-commerce</span>
+          <h2 class="display-7 mt-3">Luxury Store</h2>
+          <p class="mb-4 text-white-50">A modern online store showcasing luxury products with elegant
+            design, clear navigation, and seamless shopping experience.</p>
+          <span class="btn" style="background-color: #6c63ff;"><a href="https://chbluxuries.com/" target="_blank"
+              class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+        </div>
+      </div>
+
+      <!--column 3 row 1-->
+      <div class="col-md-4 mt-5">
+        <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+          <a href="https://www.seekoool.com/" target="_blank">
+            <img src="seekol.jpg" class="card-img-top" alt="">
+          </a>
+          <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Web app</span>
+          <h2 class="display-7 mt-3">Streaming Platform</h2>
+          <p class="mb-4 text-white-50">A sleek platform for streaming and discovering content, featuring intuitive
+            navigation, elegant design, organized sections, and engaging visuals.</p>
+          <span class="btn" style="background-color: #6c63ff;"><a href="https://www.seekoool.com/" target="_blank"
+              class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!--Row 2-->
+    <div class="row  p-3">
+
+      <!--column 1 row 2-->
+      <div class="col-md-4 mt-5 ">
+        <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+          <a href="https://cttaste.com/Mhunis-Delicacies" target="_blank">
+            <img src="delicacies.jpg" class="card-img-top " alt="">
+          </a>
+          <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">E-commerce
+            Design</span>
+          <h2 class="display-7 mt-3">Food Website</h2>
+          <p class="mb-4 text-white-50">A visually appealing site showcasing delicious treats, with clear layout,
+            appetizing visuals, and user-friendly navigation.</p>
+          <span class="btn" style="background-color: #6c63ff;"><a href="https://cttaste.com/Mhunis-Delicacies"
+              target="_blank" class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a>
+          </span>
+        </div>
+      </div>
+
+      <!--column 2 row 2-->
+      <div class="col-md-4 mt-5">
+        <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+          <a href="https://damilaretodolist.netlify.app/" target="_blank">
+            <img src="todolist.jpg" class="card-img-top" alt="">
+          </a>
+          <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Web app</span>
+          <h2 class="display-7 mt-3">Task App</h2>
+          <p class="mb-4 text-white-50">A clean and interactive to‑do list app that helps users organize tasks
+            efficiently with
+            a simple layout, smooth interactions, and intuitive controls.</p>
+          <span class="btn" style="background-color: #6c63ff;"><a href="https://damilaretodolist.netlify.app/"
+              target="_blank" class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a>
+          </span>
+        </div>
+      </div>
+
+      <!--column 3 row 2-->
+      <div class="col-md-4 mt-5">
+        <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+          <a href="https://www.behance.net/gallery/238177877/Drink-Motion-Website-Product-Grid-UIUX-Concept" target="_blank">
+            <img src="juicy.jpeg" class="card-img-top" alt="">
+          </a>
+          <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Product design</span>
+          <h2 class="display-7 mt-3">Juicy Product Design</h2>
+          <p class="mb-4 text-white-50">I design visually compelling product graphics that highlight features, simple layout, 
+            boost engagement, and convert viewers into customers with clean, scroll-ready layouts and vibrant visuals</p>
+          <span class="btn" style="background-color: #6c63ff;"><a
+              href="https://www.behance.net/gallery/238177877/Drink-Motion-Website-Product-Grid-UIUX-Concept" target="_blank"
+              class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+        </div>
+      </div>
+    </div>
+    </div>
+
+
+
+    <button class="btn btn-md loadmore mx-auto " id="loadmore2"
+      style="background-color: #6c63ff; width: 60%; display: none;">Load More2</button>
+    <!--first load more-->
+    <div class="container" id="reveal2" style="display: none;">
+      <!--row 3-->
+      <div class="row  p-3">
+
+        <!--column 1 row 3-->
+        <div class="col-md-4  ">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://behance.net/damilareolaniyi12" target="_blank">
+              <img src="design portfolio/Drey Kicks weekend offer .jpg" class="card-img-top " alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Social Media
+              Flyer</span>
+            <h2 class="display-7 mt-3">Shoe Flyer Desgn</h2>
+            <p class="mb-4 text-white-50">I create fast-loading, conversion-focused landing pages for products, events,
+              and services with strong layout, clean sections, and scroll-ready designs.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/239625419/Modern-Brand-Logo-Design-for-Bitnova" target="_blank"
+                class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+          </div>
+        </div>
+        <!--column 2 row 3-->
+        <div class="col-md-4 ">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://behance.net/damilareolaniyi12" target="_blank">
+              <img src="design images/advertising.png" class="card-img-top" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Social Media
+              Flyer</span>
+            <h2 class="display-7 mt-3">Logistics Design</h2>
+            <p class="mb-4 text-white-50">I create fast-loading, conversion-focused landing pages for products, events,
+              and services with strong layout, clean sections, and scroll-ready designs.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/239625419/Modern-Brand-Logo-Design-for-Bitnova" target="_blank"
+                class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+
+          </div>
+        </div>
+        <!--column 3 row 3-->
+        <div class="col-md-4 ">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://behance.net/damilareolaniyi12" target="_blank">
+              <img src="design images/product packaging.jpg" class="card-img-top" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Social Media
+              Flyer</span>
+            <h2 class="display-7 mt-3">School Design</h2>
+            <p class="mb-4 text-white-50">I create fast-loading, conversion-focused landing pages for products, events,
+              and services with strong layout, clean sections, and scroll-ready designs.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/239625419/Modern-Brand-Logo-Design-for-Bitnova" target="_blank"
+                class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+          </div>
+        </div>
+
+      </div>
+      <!--Row 4-->
+      <div class="row p-3">
+        <!--column 1 row 4-->
+        <div class="col-md-4 mt-5 ">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://behance.net/damilareolaniyi12" target="_blank">
+              <img src="design portfolio/Bitnova moodboard logo.jpg" class="card-img-top rounded" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Social Media
+              Flyer</span>
+            <h2 class="display-7 mt-3">Church Design</h2>
+            <p class="mb-4 text-white-50">I create fast-loading, conversion-focused landing pages for products, events,
+              and services with strong layout, clean sections, and scroll-ready designs.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/239625419/Modern-Brand-Logo-Design-for-Bitnova" target="_blank"
+                class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+          </div>
+        </div>
+        <!--column 2 row 4-->
+        <div class="col-md-4 mt-5">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://behance.net/damilareolaniyi12" target="_blank">
+              <img src="design portfolio/Drey Orange design.jpg" class="card-img-top" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Social Media
+              Flyer</span>
+            <h2 class="display-7 mt-3">Anime Design</h2>
+            <p class="mb-4 text-white-50">I create fast-loading, conversion-focused landing pages for products, events,
+              and services with strong layout, clean sections, and scroll-ready designs.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/239625419/Modern-Brand-Logo-Design-for-Bitnova" target="_blank"
+                class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+          </div>
+        </div>
+        <!--column 3 row 4-->
+        <div class="col-md-4 mt-5">
+          <div class="port-wrap rounded p-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://behance.net/damilareolaniyi12" target="_blank">
+              <img src="design portfolio/your home is closer.jpg" class="card-img-top" alt="">
+            </a>
+            <span class="badge mt-2 fw-light" style="background-color: #6c63ff; font-family: monospace;">Social Media
+              Flyer</span>
+            <h2 class="display-7 mt-3">Real Estate Design</h2>
+            <p class="mb-4 text-white-50">I create fast-loading, conversion-focused landing pages for products, events,
+              and services with strong layout, clean sections, and scroll-ready designs.</p>
+            <span class="btn" style="background-color: #6c63ff;"><a
+                href="https://www.behance.net/gallery/239625419/Modern-Brand-Logo-Design-for-Bitnova" target="_blank"
+                class="text-white text-decoration-none"><i class="fa-regular fa-eye"></i> View </a> </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  </section>
+
+  <!--Design Question-->
+  <div class="row mt-5 p-5" id="faq">
+    <h1 class="display-6 text-center text-white pt-4"> Frequently Asked Question (Design)</h1>
+    <div class="accordion mx-auto text-white" id="accordionFlushExample" style="width: 80%;">
+      <div class="accordion-item mt-5 text-white" style="background-color: #6c5ce7;">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed fw-bold" type="first" data-bs-toggle="collapse"
+            data-bs-target="#first" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;">
+            Can you create a full branding package for our brand?
+          </button>
+        </h2>
+        <div id="first" class="accordion-collapse collapse" aria-labelledby="headingOne"
+          data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            Yes! I can design your logo, colors, fonts, and social media templates. Everything will match and make your
+            brand look professional and consistent.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item mt-1">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed fw-bold" type="second" data-bs-toggle="collapse"
+            data-bs-target="#second" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;"> Can you design product packaging and labels?</button>
+        </h2>
+        <div class="accordion-collapse collapse" id="second" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionFlushExample" style="background-color: #b388eb;">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            Sure! I create packaging that looks great and tells your brand story. It will catch your customers’
+            attention and feel professional.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item mt-1" style="background-color: #6c5ce7;">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed fw-bold" type="third" data-bs-toggle="collapse"
+            data-bs-target="#third" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;">
+            Do you provide social media design templates?
+          </button>
+        </h2>
+        <div id="third" class="accordion-collapse collapse" aria-labelledby="headingOne"
+          data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            Yes, I make posts, stories, and ads that match your brand. They will look clean, engaging, and easy to use
+            on all platforms.
+          </div>
+        </div>
+      </div>
+
+
+      <div class="accordion-item mt-1">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed fw-bold" type="fourth" data-bs-toggle="collapse"
+            data-bs-target="#fourth" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;"> Can you redesign my existing logo or brand?</button>
+        </h2>
+        <div class="accordion-collapse collapse" id="fourth" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionFlushExample" style="background-color: #b388eb;">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            Definitely, I can update your logo or brand style to look modern and professional while keeping what your
+            audience already knows.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item mt-1" style="background-color: #6c5ce7;">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed fw-bold" type="five" data-bs-toggle="collapse"
+            data-bs-target="#five" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;">
+            How do you make sure the design matches my vision?
+          </button>
+        </h2>
+        <div id="five" class="accordion-collapse collapse" aria-labelledby="headingOne"
+          data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            I start by understanding your brand and goals. Then I share ideas and updates with you until it feels just
+            right.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item mt-1">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed fw-bold" type="fourth" data-bs-toggle="collapse"
+            data-bs-target="#six" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;"> Can you create custom illustrations for my brand?</button>
+        </h2>
+        <div class="accordion-collapse collapse" id="six" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionFlushExample" style="background-color: #b388eb;">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            Yes, I can make unique illustrations that match your style. They help your brand stand out and feel
+            personal.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item mt-1" style="background-color: #6c5ce7;">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed fw-bold" type="five" data-bs-toggle="collapse"
+            data-bs-target="#seven" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;">
+            Do you help with marketing materials like flyers and banners?
+          </button>
+        </h2>
+        <div id="seven" class="accordion-collapse collapse" aria-labelledby="headingOne"
+          data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            Definitely, I design posters, banners, and flyers that look clean, professional, and grab attention.
+          </div>
+        </div>
+      </div>
+      <p class="text-muted mt-3 mx-auto justify-content-center d-flex">Have more questions? <a
+          href='mailto:thedreystudio1@gmail.com?subject=Project%20Inquiry&body=Hi%20Damilare,%20I’d%20like%20to%20discuss%20a%20project.' style='color: #6c63ff; text-decoration: none; pointer-events: auto;' class="ms-2"> Contact
+          me</a></p>
+
+    </div>
+  </div>
+
+
+
+
+  <!--Developer Questions-->
+
+  <div class="row p-5">
+    <h1 class="display-6 text-center pt-4"> Frequently Asked Question (Website)</h1>
+    <div class="accordion mx-auto" id="accordionFlushExamples" style="width: 80%;">
+
+      <div class="accordion-item mt-5" style="background-color: #6c5ce7;">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed fw-bold" type="first" data-bs-toggle="collapse"
+            data-bs-target="#first1" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;">
+            Can you build a website from scratch for my business?
+          </button>
+        </h2>
+        <div id="first1" class="accordion-collapse collapse" aria-labelledby="headingOne"
+          data-bs-parent="#accordionFlushExamples">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            Yes! I can make a website that fits your brand and works on all devices. It will be clean, fast, and easy to
+            use.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item mt-1">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed fw-bold" type="second" data-bs-toggle="collapse"
+            data-bs-target="#second2" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;"> Can you maintain and update my website?</button>
+        </h2>
+        <div class="accordion-collapse collapse" id="second2" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionFlushExamples" style="background-color: #b388eb;">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            Sure! I can fix issues, update content, and keep your site secure and running smoothly.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item mt-1" style="background-color: #6c5ce7;">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed fw-bold" type="third" data-bs-toggle="collapse"
+            data-bs-target="#third3" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;">
+            Will my website be mobile-friendly?
+          </button>
+        </h2>
+        <div id="third3" class="accordion-collapse collapse" aria-labelledby="headingOne"
+          data-bs-parent="#accordionFlushExamples">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            Absolutely! Your site will look and work great on phones, tablets, and computers.
+          </div>
+        </div>
+      </div>
+
+
+      <div class="accordion-item mt-1">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed fw-bold" type="fourth" data-bs-toggle="collapse"
+            data-bs-target="#fourth4" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;"> Do you optimize websites for speed and SEO?</button>
+        </h2>
+        <div class="accordion-collapse collapse" id="fourth4" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionFlushExamples" style="background-color: #b388eb;">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            Yes. I make sites load faster and follow SEO basics so people can find you easily online.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item mt-1" style="background-color: #6c5ce7;">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed fw-bold" type="five" data-bs-toggle="collapse"
+            data-bs-target="#five5" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;">
+            Can you add custom features to my website? </button>
+        </h2>
+        <div id="five5" class="accordion-collapse collapse" aria-labelledby="headingOne"
+          data-bs-parent="#accordionFlushExamples">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            Definitely! I can add forms, bookings, shops, or any features your business needs. Everything will work
+            smoothly.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item mt-1">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed fw-bold" type="fourth" data-bs-toggle="collapse"
+            data-bs-target="#six6" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;"> Can you connect my website to social media or email tools?</button>
+        </h2>
+        <div class="accordion-collapse collapse" id="six6" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionFlushExamples" style="background-color: #b388eb;">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            Yes! I can link your website to social media, newsletters, or tools to make it easy to reach your audience.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item mt-1" style="background-color: #6c5ce7;">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed fw-bold" type="five" data-bs-toggle="collapse"
+            data-bs-target="#seven7" aria-expanded="true" aria-controls="flush-collapseOne"
+            style="background-color: #111113;">
+            Can you help me if I already have a website but want changes? </button>
+        </h2>
+        <div id="seven7" class="accordion-collapse collapse" aria-labelledby="headingOne"
+          data-bs-parent="#accordionFlushExamples">
+          <div class="accordion-body text-white" style="color: #18182b;">
+            Absolutely! I can update, redesign, or add features to your existing site so it looks better and works
+            smoother.
+          </div>
+        </div>
+      </div>
+      <p class="text-muted mt-3 mx-auto justify-content-center d-flex">Have more questions? <a
+          href='mailto:thedreystudio1@gmail.com?subject=Project%20Inquiry&body=Hi%20Damilare,%20I’d%20like%20to%20discuss%20a%20project.' style='color: #6c63ff; text-decoration: none;' class="ms-2"> Contact
+          me</a></p>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  <div class="row  p-5 justify-content-around" id="contact">
+
+
+
+
+
+
+
+    <!--New Chatgpt-->
+    <div class="col-md-4 mt-5 me-5"
+      style="background: #111113; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 0.1px solid rgba(161, 161, 161, 0.308); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); z-index: 100; border-radius: 10px;">
+
+      <!-- Profile Image -->
+      <div class="wrap mx-auto d-flex mt-5" style="width: 50%;">
+        <img class="img-fluid rounded-circle" src="Damilare Social profile.jpg" alt="Damilare profile"
+          style="width: 70%; margin: auto;">
+      </div>
+
+      <!-- Name & Title -->
+      <h2 class="text-center mt-3">Damilare Olaniyi</h2>
+      <p class="text-center text-muted" style="font-size: 15px;">Frontend Dev | Designer | UI/UX</p>
+
+      <!-- Social Icons -->
+      <div class="d-flex social-icons justify-content-center mt-3 gap-3">
+        <a href="https://www.facebook.com/profile.php?id=61582470131347" target="_blank"><i
+            class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/olaniyidami162" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com/olaniyidami162" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@olaniyidami162" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://behance.net/damilareolaniyi12" target="_blank"><i class="fab fa-behance"></i></a>
+      </div>
+
+      <!-- Contact Buttons -->
+      <div class="column p-4 mt-4">
+
+        <div class="email rounded bg-dark mx-auto p-3 d-flex justify-content-between align-items-center"
+          style="cursor: pointer;">
+          <span>Email Address</span>
+          <form action="mailto: thedreystudio1@gmail.com">
+            <button type="submit" class="btn btn-sm text-white" style="background: #6c63ff;">Send Mail</button>
+        </div>
+        </form>
+
+        <a href="https://behance.net/damilareolaniyi12" class="text-white text-decoration-none" target="_blank"
+          class="text-decoration-none">
+          <div class="rounded bg-dark mt-2 mx-auto p-3 d-flex justify-content-between align-items-center"
+            style="cursor: pointer;">
+            <span>Behance Profile</span>
+            <button class="btn btn-sm text-white" style="background: #6c63ff;">Reach</button>
+          </div>
+        </a>
+
+        <a href="https://x.com/olaniyidami162" target="_blank" class="text-decoration-none text-white">
+          <div class="rounded bg-dark mt-2 mx-auto p-3 d-flex justify-content-between align-items-center"
+            style="cursor: pointer;">
+            <span>Twitter Profile</span>
+            <button class="btn btn-sm text-white" style="background: #6c63ff;">Reach</button>
+          </div>
+        </a>
+      </div>
+
+    </div>
+
+
+
+
+
+    <div class="col-md-7  mt-5 me-5" style="background: #111113;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 0.1px solid rgba(161, 161, 161, 0.308);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  border-radius: 10px;">
+
+      <h2 class="display-7 p-3 mt-3">Let’s Build Something Together</h2>
+      <span class="text-muted ms-3 font-sm" style="font-size: 14px;">Have a project, idea, or question? Fill out the
+        form below and i will get back to you quickly.</span>
+        <div id="form-message" style="color: #6c63ff; margin-bottom: 20px; display: none;"></div>
+
+      <form class="form " id="contact-form" >
+        <div class="container  " style="margin-top: 60px;">
+          <div class="mb-5 ">
+            <label for="name" class="form-label text-muted">Name</label>
+            <input type="text" name="name" id="name" class="form-control " placeholder="Your name" aria-describedby="helpId"
+              required style="border: none;" />
+
+            <label for="lastname" class="form-label mt-3 text-muted">Last Name</label>
+            <input type="text" name="lastname" id="lastname" class="form-control " placeholder="Your last name"
+              aria-describedby="helpId" required style="border: none;" />
+
+            <label for="email" class="form-label mt-3 text-muted">Email</label>
+            <input type="email" name="email" id="email" class="form-control" placeholder="Your email address"
+              aria-describedby="helpId" required style="border: none;" />
+
+
+            <label for="Message" class="form-label text-muted mt-3">Your Message</label>
+            <textarea class="form-control" name="message" id="Message" rows="3" required style="border: none;"></textarea>
+
+            <button type="reset" class="btn shadow-lg mt-5 btn-outline" style="border-color: #6c63ff;">Reset
+              All</button>
+            <button type="submit" class="btn ms-4 mt-5 " style="background-color: #6c63ff;"> Submit</button>
+
+
+
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+
+
+  <style>
+    body {
+      background: #0d0d0d;
+      /* dark background */
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    footer {
+      position: relative;
+      bottom: -73px;
+      right: auto;
+      left: 0;
+      width: 100%;
+      padding: 20px;
+      backdrop-filter: blur(15px);
+      background: #111113;
+      /* glass effect */
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      display: block;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+  </style>
+
+  <footer>
+
+    <p class="text-center "> &copy; 2025 TheDreyStudio. All Rights Reserved.</p>
+  </footer>
+
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("4dRKpi8x_rvkxMkZ4"); // your Public Key
+   })();
+
+   // Listen to form submit
+   document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // prevent page reload
+
+      emailjs.sendForm('service_652i0e8', 'template_fn22e8u', this)
+         .then(function() {
+            alert('Message sent successfully! ✅');
+            document.getElementById('contact-form').reset(); // optional: clear form
+         }, function(error) {
+            alert('Failed to send message. ❌\n' + JSON.stringify(error));
+         });
+   });
+
+   // Close navbar collapse on link click (for mobile)
+document.querySelectorAll('#navbarNav .nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    const navbarCollapse = document.getElementById('navbarNav');
+    if (navbarCollapse.classList.contains('show')) {
+      new bootstrap.Collapse(navbarCollapse).hide();
+    }
+  });
+});
+// Also close collapse when "Hire Me" button is clicked
+const hireBtn = document.getElementById('hire');
+const navbarCollapse = document.getElementById('navbarNav');
+hireBtn.addEventListener('click', () => {
+  new bootstrap.Collapse(navbarCollapse).hide();
+});
+
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1000, // animation duration in ms
+    easing: 'ease-in-out', // easing style
+    once: true, // animation happens only once
+    mirror: false // animation won't repeat on scroll up
+  });
+</script>
+
+
+  <script type="module" src="script.js"></script>
+</body>
+
+</html>
