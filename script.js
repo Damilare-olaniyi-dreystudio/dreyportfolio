@@ -47,7 +47,7 @@ revealPort = document.getElementById('reveal');
 //what to execute
 loadMoreBtn.addEventListener('click', function () {
   loadMoreBtn.style.display = 'none';
-  loadMoreBtn1.style.display = 'block';
+  // loadMoreBtn1.style.display = 'block';
 })
 loadMoreBtn.addEventListener('click', function () {
   revealPort.style.display = 'block';
