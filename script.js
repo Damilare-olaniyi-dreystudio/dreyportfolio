@@ -57,9 +57,9 @@ loadMoreBtn.addEventListener('click', function () {
 loadMoreBtn1.addEventListener('click', function () {
   loadMoreBtn1.style.display = 'none';
 })
-loadMoreBtn1.addEventListener('click', function () {
-  revealPort1.style.display = 'block'
-})
+// loadMoreBtn1.addEventListener('click', function () {
+//   revealPort1.style.display = 'block'
+// })
 
 //for revealing the second portfolio project using loadmore btn
 let loadMoreBtn3, revealPort3;
