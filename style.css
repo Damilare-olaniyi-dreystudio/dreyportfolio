@@ -92,8 +92,8 @@ html {
     width: 100%;
   }
   .hero-section .profile-img {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     margin-top: 20px;
   }
   .hero-section .row {
@@ -187,7 +187,7 @@ html {
 }
 
 .profile-img {
-  border-radius: 20%;
+  border-radius: 50%;
 }
 
 .changeSkill {
